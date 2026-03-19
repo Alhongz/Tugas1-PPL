@@ -1,5 +1,7 @@
 # 🖧 Network Devices API (RESTful API + Docker + CI/CS)
 
+![CI/CS Pipeline](https://github.com/Alhongz/Tugas1-PPL/actions/workflows/main.yml/badge.svg)
+
 ## 📌 Deskripsi Project
 
 Project ini merupakan implementasi **RESTful API sederhana** untuk mengelola data perangkat jaringan (seperti Router, Switch, dan Access Point). API ini dibangun menggunakan **Next.js (App Router)** dan dirancang mengikuti standar RESTful, serta telah terintegrasi penuh dengan:
