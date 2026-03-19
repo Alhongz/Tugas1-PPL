@@ -1,36 +1,250 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🖧 Network Devices API (RESTful API + Docker + CI/CS)
 
-## Getting Started
+## 📌 Deskripsi Project
 
-First, run the development server:
+Project ini merupakan implementasi **RESTful API sederhana** untuk mengelola data perangkat jaringan (seperti Router, Switch, dan Access Point). API ini dibangun menggunakan **Next.js (App Router)** dan dirancang mengikuti standar RESTful, serta telah terintegrasi penuh dengan:
+
+* 🐳 Docker (Containerization)
+* 🔁 Git Workflow (Feature Branch & Conventional Commits)
+* 🤖 GitHub Actions (Continuous Integration)
+* 🔐 Security Scan (Continuous Security dengan GitLeaks)
+
+API ini mendukung operasi **CRUD (Create, Read, Update, Delete)** dengan format response JSON standar.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+* Node.js
+* Next.js (App Router)
+* Docker & Docker Compose
+* Git & GitHub
+* GitHub Actions (CI/CS Pipeline)
+* GitLeaks (Security Vulnerability Scanner)
+
+---
+
+## 📂 Struktur Project Utama
+
+```text
+api-jaringan/
+│
+├── src/
+│   └── app/
+│       └── api/
+│           └── devices/
+│               ├── route.js          # Endpoint GET & POST
+│               ├── data.js           # In-memory array (Database sementara)
+│               └── [id]/
+│                   └── route.js      # Endpoint GET(ID), PUT, DELETE
+│
+├── .github/workflows/main.yml        # Konfigurasi CI/CS Pipeline
+├── Dockerfile                        # Konfigurasi Docker Image
+├── docker-compose.yml                # Konfigurasi Docker Container
+├── package.json
+└── README.md
+
+---
+
+## 🚀 Cara Menjalankan Aplikasi
+
+### 🔹 Menggunakan Docker (Recommended)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔹 Tanpa Docker (Local)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌐 Informasi Port
 
-To learn more about Next.js, take a look at the following resources:
+| Keterangan | Port |
+| ---------- | ---- |
+| Host       | 8080 |
+| Container  | 3000 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Akses API di:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+http://localhost:8080/api/devices
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📡 Endpoint API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🔹 1. GET /items
+
+Mengambil semua data barang
+
+### 🔹 2. GET /items/:id
+
+Mengambil data barang berdasarkan ID
+
+### 🔹 3. POST /items
+
+Menambahkan data barang
+
+### 🔹 4. PUT /items/:id
+
+Mengupdate data barang
+
+### 🔹 5. DELETE /items/:id
+
+Menghapus data barang
+
+---
+
+## 📦 Contoh Request & Response
+
+### ✅ Success Response
+
+```json
+{
+  "status": "OK",
+  "message": "Berhasil mengambil data perangkat jaringan",
+  "data": {
+    "id": "1",
+    "name": "Cisco Catalyst 2960",
+    "type": "Switch",
+    "ip_address": "192.168.1.10",
+    "status": "active"
+  },
+  "errors": null
+}
+```
+
+### ❌ Error Response
+
+```json
+{
+  "status": "ERROR",
+  "message": "Perangkat tidak ditemukan",
+  "data": null,
+  "errors": [
+    "Not Found"
+  ]
+}
+```
+
+---
+
+## 🧪 Build Testing
+
+Testing dilakukan dengan memastikan aplikasi berhasil dikompilasi tanpa error (Build Check).
+
+Jalankan test build lokal:
+
+```bash
+npm run build
+```
+
+---
+
+## 🐳 Docker Configuration
+
+### Dockerfile
+
+Menggunakan base image node:20-alpine dengan instruksi:
+
+* WORKDIR
+* COPY
+* RUN
+* EXPOSE
+* CMD
+
+### docker-compose.yml
+
+Digunakan untuk menjalankan container dengan perintah:
+
+```bash
+docker compose up --build
+```
+
+---
+
+## 🔀 Git Workflow
+
+Project ini menggunakan **Feature Branch Workflow**:
+
+* `main` → branch utama (production)
+* `develop` → integrasi fitur
+* `feat/*` → pengembangan fitur
+
+### ✏️ Conventional Commits
+
+Contoh:
+
+```
+feat: membuat endpoint CRUD untuk data perangkat jaringan
+build: menambahkan konfigurasi Dockerfile dan docker-compose
+fix: menambahkan fetch-depth 0 pada checkout agar gitleaks berfungsi
+ci: menambahkan github actions untuk CI dan CS pipeline
+```
+---
+
+## 🤖 CI/CD (GitHub Actions)
+
+Workflow berada di:
+
+```
+.github/workflows/main.yml
+```
+
+### 🔹 Proses yang dijalankan:
+
+1. Install dependencies (npm install)
+2. Run build check (npm run build)
+3. Security scan (gitleaks-action)
+
+### 🔹 Trigger:
+
+* Push
+* Pull Request
+
+---
+
+## 🔐 Security Scan
+
+Menggunakan:
+
+```bash
+uses: gitleaks/gitleaks-action@v2
+```
+
+Untuk memastikan tidak ada token, password, atau kredensial rahasia yang tidak sengaja ter-push ke dalam repository..
+
+---
+
+## 📊 Status CI/CD
+
+CI/CS berjalan otomatis menggunakan GitHub Actions setiap ada perubahan pada repository.
+
+---
+
+## 📌 Catatan
+
+* Data disimpan sementara (in-memory array di data.js), tidak menggunakan database eksternal.
+* `node_modules` tidak disertakan dalam repository (sesuai best practice).
+* API dirancang sederhana untuk keperluan pembelajaran.
+
+---
+
+## 🎯 Kesimpulan
+
+Project ini berhasil mengimplementasikan:
+
+* RESTful API standar
+* Docker containerization
+* Git workflow profesional
+* CI/CS automation
+* Build testing & security scan
+
+Sehingga memenuhi seluruh requirement tugas Proyek Perangkat Lunak 1.
