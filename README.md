@@ -187,7 +187,7 @@ feat: membuat endpoint CRUD untuk data perangkat jaringan
 build: menambahkan konfigurasi Dockerfile dan docker-compose
 fix: menambahkan fetch-depth 0 pada checkout agar gitleaks berfungsi
 ci: menambahkan github actions untuk CI dan CS pipeline
-
+```
 ---
 
 ## 🤖 CI/CD (GitHub Actions)
